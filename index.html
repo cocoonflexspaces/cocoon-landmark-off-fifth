@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cocoon Flex Spaces — Discovery Portfolio · Landmark off Fifth</title>
+<meta name="description" content="A landmarked Beaux-Arts exhibition house on Manhattan's Upper East Side. Part of the Cocoon Flex Spaces Discovery Portfolio." />
+<style>
+  /* ============================================================
+     COCOON BRAND TOKENS
+     Primary: #F54029 (Brilliance / terracotta) + #F5F2E8 (Natural / cream)
+     Accent:  #275453 (Clarity / deep teal), #000000 (Black)
+     Type:    Helvetica Neue — Bold for titles, Medium for headlines, Regular for body
+     ============================================================ */
+  :root {
+    --cream: #F5F2E8;
+    --cream-deep: #ECE7D6;
+    --cream-warm: #EFE9D7;
+    --terracotta: #F54029;
+    --terracotta-soft: #E8593F;
+    --terracotta-deep: #C8331E;
+    --teal: #275453;
+    --teal-soft: #355F5E;
+    --ink: #1A1A1A;
+    --ink-soft: #4A4A4A;
+    --ink-mute: #6B6B6B;
+    --rule: rgba(26,26,26,0.12);
+    --rule-soft: rgba(26,26,26,0.06);
+    --max: 1280px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: var(--terracotta); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* TYPE SCALE */
+  .superhead {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 11px;
+    color: var(--terracotta);
+  }
+  .title {
+    font-weight: 700;
+    font-size: clamp(40px, 7vw, 96px);
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    margin: 0;
+  }
+  .title .accent { color: var(--terracotta); }
+  .headline {
+    font-weight: 500;
+    font-size: clamp(24px, 3.2vw, 40px);
+    line-height: 1.2;
+    letter-spacing: -0.012em;
+    margin: 0 0 0.6em;
+  }
+  .lede {
+    font-weight: 400;
+    font-size: clamp(18px, 1.5vw, 22px);
+    line-height: 1.45;
+    color: var(--ink-soft);
+    margin: 0 0 1em;
+  }
+  .body { font-size: 17px; line-height: 1.6; }
+  .caption {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+  }
+  .eyebrow {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 700;
+    color: var(--terracotta);
+    margin-bottom: 12px;
+  }
+
+  /* SECTION FRAME */
+  section {
+    padding: clamp(64px, 10vh, 140px) clamp(24px, 5vw, 80px);
+    max-width: var(--max);
+    margin: 0 auto;
+  }
+  section + section { border-top: 1px solid var(--rule); }
+  section.tight { padding-top: clamp(48px, 6vh, 80px); padding-bottom: clamp(48px, 6vh, 80px); }
+  section.full { max-width: none; padding-left: 0; padding-right: 0; }
+  section.full > .inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 clamp(24px, 5vw, 80px);
+  }
+  section.cream-deep { background: var(--cream-deep); }
+
+  .logomark { width: 28px; height: 28px; flex: 0 0 auto; }
+  .wordmark { height: 16px; width: auto; flex: 0 0 auto; }
+
+  /* TOP BAR */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(245, 242, 232, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .topbar-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 14px clamp(24px, 5vw, 80px);
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  }
+  .topbar-brand { display: flex; align-items: center; gap: 18px; font-size: 13px; }
+  .topbar-brand .cocoon { display: flex; align-items: center; gap: 10px; padding-right: 18px; }
+  .topbar-brand .divider { width: 1px; height: 22px; background: var(--rule); flex: 0 0 auto; }
+  .topbar-brand .partner {
+    font-weight: 600; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.14em; color: var(--ink);
+  }
+  .topbar-meta {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em;
+    color: var(--ink-soft); font-weight: 600;
+  }
+  @media (max-width: 700px) { .topbar-meta { display: none; } }
+
+  /* COVER */
+  .cover {
+    position: relative; background: var(--cream);
+    padding: 0; max-width: none; overflow: hidden;
+    border-bottom: 1px solid var(--rule);
+  }
+  .cover-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    min-height: 640px;
+  }
+  .cover-text {
+    padding: clamp(40px, 6vw, 80px);
+    display: flex; flex-direction: column; justify-content: space-between; gap: 32px;
+    background: var(--cream);
+  }
+  .cover-image {
+    position: relative; overflow: hidden;
+    background: var(--cream-deep);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cover-image img { width: 100%; height: 100%; object-fit: cover; }
+  .cover-meta {
+    display: grid; gap: 6px; margin-top: 32px;
+    font-size: 13px; line-height: 1.65; color: var(--ink-soft);
+  }
+  .cover-meta strong { color: var(--ink); font-weight: 600; }
+  @media (max-width: 800px) { .cover-grid { grid-template-columns: 1fr; min-height: auto; } }
+
+  /* TWO-COL */
+  .two-col {
+    display: grid; grid-template-columns: 1fr 1.4fr;
+    gap: clamp(40px, 6vw, 96px); align-items: start;
+  }
+  .two-col.balanced { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 800px) { .two-col, .two-col.balanced { grid-template-columns: 1fr; } }
+
+  /* CALLOUT BAR */
+  .callout {
+    background: var(--terracotta);
+    color: #FFF;
+    padding: clamp(40px, 6vw, 80px);
+    margin: 0; max-width: none;
+  }
+  .callout.teal { background: var(--teal); }
+  .callout.ink  { background: var(--ink); }
+  .callout .inner {
+    max-width: var(--max); margin: 0 auto;
+    padding: 0 clamp(24px, 5vw, 80px);
+  }
+  .callout .title { color: #FFF; }
+  .callout .superhead { color: rgba(255,255,255,0.88); }
+  .callout .lede { color: rgba(255,255,255,0.92); }
+
+  /* DIVIDER LABEL */
+  .divider-label {
+    display: grid; grid-template-columns: auto 1fr auto;
+    gap: 24px; align-items: center; margin: 0 0 32px;
+  }
+  .divider-label .text {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 700; color: var(--terracotta);
+  }
+  .divider-label .line { height: 1px; background: var(--rule); }
+
+  /* STATS */
+  .stat-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 24px; margin-top: 32px;
+  }
+  .stat .num {
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 700; letter-spacing: -0.02em; line-height: 1;
+    color: var(--terracotta);
+  }
+  .stat .label {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--ink-soft); margin-top: 8px; font-weight: 600;
+  }
+  @media (max-width: 700px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
+
+  /* NOTE BOX */
+  .note {
+    background: #FFF;
+    border-left: 3px solid var(--terracotta);
+    padding: 32px 36px;
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  .note p { margin: 0 0 14px; }
+  .note p:last-child { margin-bottom: 0; }
+  .note .signature {
+    margin-top: 18px; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--terracotta); font-weight: 700;
+  }
+
+  /* VIDEO */
+  .video-wrap {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: var(--ink);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+  }
+  .video-wrap iframe {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    border: 0;
+  }
+
+  /* MOSAIC */
+  .mosaic-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    grid-auto-rows: 240px;
+    gap: 14px;
+  }
+  .mosaic-grid .frame {
+    position: relative;
+    overflow: hidden;
+    background: var(--cream-deep);
+    border: 1px solid var(--rule);
+  }
+  .mosaic-grid .frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .mosaic-grid .frame.hero { grid-column: span 2; grid-row: span 2; }
+  .mosaic-grid .frame.tall { grid-row: span 2; }
+  .mosaic-grid .frame.wide { grid-column: span 2; }
+  @media (max-width: 900px) {
+    .mosaic-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 200px; }
+    .mosaic-grid .frame.hero { grid-column: span 2; grid-row: span 2; }
+    .mosaic-grid .frame.tall { grid-row: span 1; }
+    .mosaic-grid .frame.wide { grid-column: span 2; }
+  }
+  @media (max-width: 560px) {
+    .mosaic-grid { grid-template-columns: 1fr; grid-auto-rows: 240px; }
+    .mosaic-grid .frame.hero, .mosaic-grid .frame.tall,
+    .mosaic-grid .frame.wide { grid-column: auto; grid-row: auto; }
+  }
+
+  /* FLOOR SPEC LIST */
+  .specs {
+    display: grid; gap: 0;
+    border-top: 1px solid var(--rule);
+    margin-top: 16px;
+  }
+  .specs .space {
+    display: grid; grid-template-columns: 1fr auto; gap: 16px;
+    padding: 18px 0; border-bottom: 1px solid var(--rule-soft);
+    align-items: baseline;
+  }
+  .specs .space .name {
+    font-size: 16px; font-weight: 700; letter-spacing: -0.005em;
+  }
+  .specs .space .name span {
+    display: block; font-weight: 400;
+    color: var(--ink-soft); font-size: 13px; margin-top: 4px; line-height: 1.5;
+  }
+  .specs .space .dims {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em;
+    font-weight: 700; color: var(--terracotta);
+    white-space: nowrap; text-align: right; line-height: 1.7;
+  }
+  .plan-frame {
+    background: #FFF;
+    border: 1px solid var(--rule);
+    padding: clamp(16px, 2vw, 28px);
+    margin-top: 24px;
+  }
+  .plan-frame img { margin: 0 auto; max-height: 640px; width: auto; max-width: 100%; }
+
+  /* WALK STEPS / DECISION CARDS */
+  .walk {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 32px; margin-top: 48px;
+  }
+  .walk .step {
+    border-top: 2px solid var(--terracotta);
+    padding-top: 24px;
+  }
+  .callout .walk .step { border-top-color: rgba(255,255,255,0.5); }
+  .walk .step-num {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--terracotta); font-weight: 700; margin-bottom: 10px;
+  }
+  .callout .walk .step-num { color: rgba(255,255,255,0.78); }
+  .walk .step h4 {
+    font-size: 22px; font-weight: 600; margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  .walk .step p {
+    margin: 0; color: var(--ink-soft); font-size: 15px; line-height: 1.55;
+  }
+  .callout .walk .step h4 { color: #FFF; }
+  .callout .walk .step p { color: rgba(255,255,255,0.85); }
+  @media (max-width: 800px) { .walk { grid-template-columns: 1fr; } }
+
+  /* BUTTON */
+  .btn {
+    display: inline-block;
+    background: var(--terracotta);
+    color: #FFF;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 16px 28px;
+    border: 0;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--terracotta-deep); text-decoration: none; }
+  .btn-sub {
+    display: block;
+    margin-top: 12px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .callout .btn-sub { color: rgba(255,255,255,0.62); }
+
+  /* EXPANDABLE MEDIA / LIGHTBOX */
+  .mosaic-grid .frame img,
+  .plan-frame img,
+  .cover-image img { cursor: zoom-in; }
+  .video-shell { position: relative; }
+  .video-expand {
+    position: absolute; right: 14px; bottom: 14px; z-index: 2;
+    background: rgba(26,26,26,0.82);
+    color: #FFF;
+    border: 1px solid rgba(255,255,255,0.35);
+    font-family: inherit;
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    padding: 10px 16px;
+    cursor: pointer;
+  }
+  .video-expand:hover { background: var(--terracotta); border-color: var(--terracotta); }
+  .lightbox {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(26,26,26,0.95);
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 4vmin;
+    cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox .lb-figure { margin: 0; text-align: center; }
+  .lightbox .lb-figure img {
+    max-width: 92vw; max-height: 86vh;
+    width: auto; height: auto;
+    margin: 0 auto;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
+  .lightbox .lb-caption {
+    margin-top: 16px;
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.16em;
+    color: var(--cream);
+  }
+  .lightbox .lb-frame {
+    width: min(92vw, calc(16 / 9 * 82vh));
+    cursor: default;
+  }
+  .lightbox .lb-video {
+    position: relative; width: 100%; padding-top: 56.25%;
+    background: #000;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
+  .lightbox .lb-video iframe {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; border: 0;
+  }
+  .lightbox .lb-close {
+    position: absolute; top: 20px; right: 26px;
+    font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.16em;
+    color: var(--cream);
+    cursor: pointer;
+  }
+  .lightbox .lb-close:hover { color: var(--terracotta); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: var(--cream);
+    padding: clamp(48px, 6vw, 80px) clamp(24px, 5vw, 80px);
+  }
+  footer .inner {
+    max-width: var(--max); margin: 0 auto;
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px;
+  }
+  footer .sig p { margin: 0 0 12px; }
+  footer .sig .name {
+    font-size: 18px; font-weight: 700; margin-top: 18px; color: #FFF;
+  }
+  footer .sig .role {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em;
+    color: var(--terracotta); font-weight: 700; margin-top: 4px;
+  }
+  footer .meta {
+    font-size: 12px; line-height: 1.7;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.62);
+  }
+  footer .meta strong { color: #FFF; }
+  footer a { color: var(--cream); text-decoration: underline; }
+  @media (max-width: 700px) {
+    footer .inner { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     TOP BAR
+     ============================================================ -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-brand">
+      <span class="cocoon">
+        <img class="logomark" src="img/cocoon/mark-128.png" alt="Cocoon" />
+        <img class="wordmark" src="img/cocoon/wordmark-320.png" alt="Cocoon Flex Spaces" />
+      </span>
+      <span class="divider"></span>
+      <span class="partner">Landmark off Fifth</span>
+    </div>
+    <div class="topbar-meta">Discovery Portfolio &middot; June 2026</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     COVER
+     ============================================================ -->
+<section class="cover full">
+  <div class="cover-grid">
+    <div class="cover-text">
+      <div>
+        <div class="superhead">Discovery Portfolio &middot; Upper East Side</div>
+        <h1 class="title">A landmark<br/>off <span class="accent">Fifth,</span><br/>built to show.</h1>
+        <p class="lede" style="margin-top:24px; max-width: 520px;">
+          A 1913 Beaux-Arts exhibition house directly across from the
+          Guggenheim — fully restored, museum-grade, and now available
+          for select productions, dinners, runway and brand activations
+          through Cocoon.
+        </p>
+      </div>
+      <div class="cover-meta">
+        <div><strong>Spaces</strong> &nbsp;·&nbsp; Six bookable spaces across three gallery floors</div>
+        <div><strong>Ceilings</strong> &nbsp;·&nbsp; Up to 17′-10″</div>
+        <div><strong>Managed by</strong> &nbsp;·&nbsp; Cocoon Flex Spaces</div>
+        <div><strong>Contact</strong> &nbsp;·&nbsp; Eduard Monteagudo Martín · <a href="mailto:eduard@cocoonflexspaces.com">eduard@cocoonflexspaces.com</a> &nbsp;·&nbsp; Sales Team · <a href="mailto:info@cocoonflexspaces.com">info@cocoonflexspaces.com</a></div>
+      </div>
+    </div>
+    <div class="cover-image">
+      <img src="img/venue/facade.jpg" alt="Landmarked limestone façade" />
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FILM
+     ============================================================ -->
+<section class="cream-deep full tight">
+  <div class="inner">
+    <div class="divider-label">
+      <span class="text">The venue on film</span>
+      <span class="line"></span>
+      <span class="text" style="color:var(--ink-soft);">01</span>
+    </div>
+    <h2 class="headline" style="max-width: 760px;">Ninety seconds inside the building.</h2>
+    <div class="video-shell">
+      <div class="video-wrap">
+        <iframe
+          loading="lazy"
+          src="https://www.canva.com/design/DAHLiMoHQRE/Gk5GPBXM3GjqSo6wRgzO7g/watch?embed"
+          allowfullscreen="allowfullscreen"
+          allow="fullscreen"
+          title="Venue film by Cocoon Flex Spaces">
+        </iframe>
+      </div>
+      <button class="video-expand" id="video-expand" type="button">Expand ⤢</button>
+    </div>
+    <p class="caption" style="margin-top: 16px; color: var(--ink-mute);">
+      Filmed by Cocoon Flex Spaces &middot; Best viewed full screen &middot;
+      <a href="assets/cocoon-flex-spaces-assets.zip" download>Download all assets (.zip)</a>
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     PERSONAL NOTE
+     ============================================================ -->
+<section>
+  <div class="divider-label">
+    <span class="text">A note from Eduard</span>
+    <span class="line"></span>
+    <span class="text" style="color:var(--ink-soft);">02</span>
+  </div>
+  <div class="two-col">
+    <div>
+      <h2 class="headline" style="margin:0;">The space you<br/>asked us about.</h2>
+    </div>
+    <div class="note">
+      <p>Hi,</p>
+      <p>
+        Thank you for replying to our note about this building — here is
+        the fuller picture. This is one of the most special
+        venues in our Discovery Portfolio: a landmarked exhibition house
+        commissioned in 1913, restored top to bottom, and sitting directly
+        across from the Guggenheim.
+      </p>
+      <p>
+        It was conceived from day one as a place to <strong>show things</strong> —
+        a library, exhibition hall and sculpture studio — and a century later
+        it still does exactly that, with museum-grade galleries, a covered
+        porte cochère for arrivals and load-in, and ceiling heights that are
+        very hard to find this close to Fifth Avenue.
+      </p>
+      <p>
+        Below you'll find every space, floor by floor, with plans and
+        dimensions. When a format comes to mind, write me or the team and
+        we'll set up a walkthrough.
+      </p>
+      <p class="signature">— Eduard</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     THE BUILDING AT A GLANCE
+     ============================================================ -->
+<section>
+  <div class="divider-label">
+    <span class="text">The building at a glance</span>
+    <span class="line"></span>
+    <span class="text" style="color:var(--ink-soft);">03</span>
+  </div>
+  <h2 class="headline">A purpose-built exhibition house, a century in the making.</h2>
+  <p class="lede" style="max-width: 760px;">
+    Designed by architect Ogden Codman and commissioned by Archer Milton
+    Huntington in 1913–1915 as a library, exhibition hall, entertainment
+    space and studio for the sculptor Anna Hyatt Huntington. Gifted to the
+    National Academy in 1941, it exhibited fine art for over half a century —
+    then was fully restored and reopened in 2021 as a contemporary
+    exhibition space.
+  </p>
+
+  <div class="stat-grid">
+    <div class="stat">
+      <div class="num">1913</div>
+      <div class="label">Commissioned</div>
+    </div>
+    <div class="stat">
+      <div class="num">3</div>
+      <div class="label">Gallery floors</div>
+    </div>
+    <div class="stat">
+      <div class="num">6</div>
+      <div class="label">Bookable spaces</div>
+    </div>
+    <div class="stat">
+      <div class="num">17′10″</div>
+      <div class="label">Tallest ceilings</div>
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-top: 64px;">
+    <div>
+      <div class="eyebrow">Why producers ask about it</div>
+      <p class="body" style="color: var(--ink-soft); margin: 0 0 18px;">
+        <strong style="color: var(--ink);">The address.</strong>
+        Directly across from the Guggenheim, steps off Fifth Avenue and
+        Central Park — guests arrive at one of the most recognizable
+        museum blocks in the world.
+      </p>
+      <p class="body" style="color: var(--ink-soft); margin: 0 0 18px;">
+        <strong style="color: var(--ink);">A covered porte cochère.</strong>
+        A drive-in arrival and load-in court behind landmark wood doors —
+        a near-impossible luxury in Manhattan, equally good for talent
+        arrivals and production load-in.
+      </p>
+      <p class="body" style="color: var(--ink-soft); margin: 0 0 18px;">
+        <strong style="color: var(--ink);">Museum-grade galleries.</strong>
+        Three floors of restored exhibition rooms served by a passenger /
+        service elevator, each with its own character: white-box, carved
+        stone, and warm wood panelling.
+      </p>
+      <p class="body" style="color: var(--ink-soft); margin: 0;">
+        <strong style="color: var(--ink);">It reads on camera.</strong>
+        The oval stair, the checkered marble, the arched windows — the
+        building photographs like a set that took a hundred years to dress.
+      </p>
+    </div>
+    <div>
+      <div class="mosaic-grid" style="grid-template-columns: 1fr 1fr; grid-auto-rows: 300px;">
+        <div class="frame"><img src="img/venue/facade-historic.jpg" alt="Historic photograph of the façade" /></div>
+        <div class="frame"><img src="img/venue/blueprint.jpg" alt="Original blueprints of the building" /></div>
+      </div>
+      <p class="caption" style="margin-top: 14px; color: var(--ink-mute);">
+        The original façade and blueprints, 1913–1915
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FIRST FLOOR
+     ============================================================ -->
+<section>
+  <div class="divider-label">
+    <span class="text">First floor &middot; Porte Cochère &amp; Gallery 1</span>
+    <span class="line"></span>
+    <span class="text" style="color:var(--ink-soft);">04</span>
+  </div>
+  <h2 class="headline">Arrive under cover. Open into a white-box gallery.</h2>
+  <p class="lede" style="max-width: 760px;">
+    The ground floor pairs the porte cochère — a covered drive-in court —
+    with a clean, coffered-ceiling gallery on original penny tile. Together
+    they make the strongest load-in-to-show floor in the building.
+  </p>
+
+  <div class="mosaic-grid" style="margin-top: 40px;">
+    <div class="frame hero"><img src="img/venue/porte-cochere.jpg" alt="Porte cochère looking through to Gallery 1" /></div>
+    <div class="frame"><img src="img/venue/porte-cochere-doors.jpg" alt="Landmark wood doors of the porte cochère" /></div>
+    <div class="frame tall"><img src="img/venue/gallery1-a.jpg" alt="Gallery 1 — white walls under a coffered concrete ceiling" /></div>
+    <div class="frame"><img src="img/venue/gallery1-b.jpg" alt="Gallery 1 — long white exhibition wall" /></div>
+  </div>
+
+  <div class="two-col" style="margin-top: 48px;">
+    <div>
+      <div class="eyebrow">Spaces on this floor</div>
+      <div class="specs">
+        <div class="space">
+          <span class="name">Gallery 1
+            <span>White-box gallery on original penny tile, coffered ceiling, direct porte cochère access.</span>
+          </span>
+          <span class="dims">1,070 SF<br/>CH 14′-0″</span>
+        </div>
+        <div class="space">
+          <span class="name">Porte Cochère
+            <span>Covered drive-in court behind landmark wood doors — arrivals, load-in, or an installation moment of its own.</span>
+          </span>
+          <span class="dims">340 SF<br/>CH 14′-4″</span>
+        </div>
+        <div class="space">
+          <span class="name">Viewing Room
+            <span>Intimate side room off the gallery — green room, VIP salon or private viewing.</span>
+          </span>
+          <span class="dims">240 SF<br/>CH 12′-6″</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="eyebrow">Floor plan</div>
+      <div class="plan-frame">
+        <img src="img/plans/floor1.png" alt="First floor plan — porte cochère, Gallery 1 and viewing room" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECOND FLOOR
+     ============================================================ -->
+<section class="cream-deep full">
+  <div class="inner">
+    <div class="divider-label">
+      <span class="text">Second floor &middot; Stone Room &amp; Gallery 2</span>
+      <span class="line"></span>
+      <span class="text" style="color:var(--ink-soft);">05</span>
+    </div>
+    <h2 class="headline">The showpiece floor, under 17-foot ceilings.</h2>
+    <p class="lede" style="max-width: 760px;">
+      The Stone Room is the building's signature: carved Caen stone walls,
+      original checkered marble floors and arched windows over the street.
+      It opens onto Gallery 2 — the same soaring ceiling height in a clean,
+      restored-wood-floor gallery.
+    </p>
+
+    <div class="mosaic-grid" style="margin-top: 40px;">
+      <div class="frame hero"><img src="img/venue/stone-room-b.jpg" alt="Stone Room — checkered marble floor and arched windows" /></div>
+      <div class="frame"><img src="img/venue/stone-room-a.jpg" alt="Stone Room toward the window wall" /></div>
+      <div class="frame tall"><img src="img/venue/gallery2-a.jpg" alt="Gallery 2 — white gallery with 17-foot ceilings" /></div>
+      <div class="frame"><img src="img/venue/stone-room-event.jpg" alt="Stone Room dressed for an event" /></div>
+    </div>
+
+    <div class="two-col" style="margin-top: 48px;">
+      <div>
+        <div class="eyebrow">Spaces on this floor</div>
+        <div class="specs">
+          <div class="space">
+            <span class="name">Stone Room
+              <span>Caen stone plaster walls, original marble floors, chandelier-ready. Seated dinners, ceremonies, runway moments.</span>
+            </span>
+            <span class="dims">905 SF<br/>CH 17′-10″</span>
+          </div>
+          <div class="space">
+            <span class="name">Gallery 2
+              <span>White gallery with restored wood floors and the same 17′-10″ ceiling — exhibitions, presentations, receptions.</span>
+            </span>
+            <span class="dims">1,070 SF<br/>CH 17′-10″</span>
+          </div>
+        </div>
+        <p class="caption" style="margin-top: 20px; color: var(--ink-mute);">
+          The two rooms connect, so the floor works as a single
+          ~2,000 SF sequence: cocktails in one, dinner in the other.
+        </p>
+      </div>
+      <div>
+        <div class="eyebrow">Floor plan</div>
+        <div class="plan-frame">
+          <img src="img/plans/floor2.png" alt="Second floor plan — Stone Room and Gallery 2" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     THIRD FLOOR
+     ============================================================ -->
+<section>
+  <div class="divider-label">
+    <span class="text">Third floor &middot; Wood Room &amp; Gallery 3</span>
+    <span class="line"></span>
+    <span class="text" style="color:var(--ink-soft);">06</span>
+  </div>
+  <h2 class="headline">Warm wood panelling, and a gallery full of light.</h2>
+  <p class="lede" style="max-width: 760px;">
+    The top gallery floor pairs the Wood Room — fully panelled in warm wood,
+    with a fireplace — against Gallery 3's bright, window-lined white walls.
+    Two completely different moods, twenty feet apart.
+  </p>
+
+  <div class="mosaic-grid" style="margin-top: 40px;">
+    <div class="frame hero"><img src="img/venue/wood-room-a.jpg" alt="Wood Room — full wood panelling and fireplace" /></div>
+    <div class="frame"><img src="img/venue/wood-room-chair.jpg" alt="Wood Room detail with rocking chair" /></div>
+    <div class="frame tall"><img src="img/venue/gallery3.jpg" alt="Gallery 3 — white gallery with large windows" /></div>
+    <div class="frame"><img src="img/venue/wood-room-b.jpg" alt="Wood Room toward the windows" /></div>
+  </div>
+
+  <div class="two-col" style="margin-top: 48px;">
+    <div>
+      <div class="eyebrow">Spaces on this floor</div>
+      <div class="specs">
+        <div class="space">
+          <span class="name">Wood Room
+            <span>New wood panelling over refinished wood floors, working fireplace. Salon dinners, press previews, intimate talks.</span>
+          </span>
+          <span class="dims">1,070 SF<br/>CH 14′-9″</span>
+        </div>
+        <div class="space">
+          <span class="name">Gallery 3
+            <span>Bright white gallery with a wall of windows — showrooms, shoots and daytime presentations.</span>
+          </span>
+          <span class="dims">CH 14′-9″</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="eyebrow">Floor plan</div>
+      <div class="plan-frame">
+        <img src="img/plans/floor3.jpg" alt="Third floor plan — Wood Room and Gallery 3" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DETAILS
+     ============================================================ -->
+<section class="cream-deep full">
+  <div class="inner">
+    <div class="divider-label">
+      <span class="text">The connective tissue</span>
+      <span class="line"></span>
+      <span class="text" style="color:var(--ink-soft);">07</span>
+    </div>
+    <h2 class="headline">Details that read on camera.</h2>
+    <p class="lede" style="max-width: 720px;">
+      Between the galleries: an oval stair coiling up the full height of the
+      building, checkered marble landings, and a sculptural cobalt-tiled
+      restroom that guests photograph more than some venues' main rooms.
+    </p>
+
+    <div class="mosaic-grid" style="margin-top: 40px;">
+      <div class="frame hero"><img src="img/venue/stair-oval.jpg" alt="The oval stair, looking up through the building" /></div>
+      <div class="frame tall"><img src="img/venue/restroom-blue.jpg" alt="Sculptural cobalt-tiled restroom" /></div>
+      <div class="frame"><img src="img/venue/stair-hall.jpg" alt="Stair hall with checkered marble floor" /></div>
+      <div class="frame"><img src="img/venue/stair-detail.jpg" alt="Stair balustrade detail" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FORMATS CALLOUT
+     ============================================================ -->
+<section class="callout full">
+  <div class="inner">
+    <div class="superhead">What it's built for</div>
+    <h2 class="title" style="font-size: clamp(36px, 6vw, 72px); margin: 18px 0 22px;">
+      Built for shows.<br/>Ready for yours.
+    </h2>
+    <p class="lede" style="max-width: 820px;">
+      Exhibitions and brand installations across three gallery floors.
+      Seated dinners and ceremonies in the Stone Room. Runway and
+      presentations under 17-foot ceilings. Film and photo production with
+      drive-in load-in. Press days and showrooms with six distinct
+      backdrops in one building.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     NEXT STEPS
+     ============================================================ -->
+<section class="callout ink full">
+  <div class="inner">
+    <div class="superhead">Next steps</div>
+    <h2 class="title" style="font-size: clamp(32px, 5vw, 56px); margin: 18px 0 8px;">
+      See it in person.
+    </h2>
+    <div class="walk">
+      <div class="step">
+        <div class="step-num">01 &middot; Walkthrough</div>
+        <h4>Book a private visit</h4>
+        <p>Write us with two or three windows that suit you and we'll
+        schedule a walkthrough of all three floors.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02 &middot; Dates</div>
+        <h4>Place a soft hold</h4>
+        <p>Have a date in mind? We can place a courtesy hold while you
+        develop the concept and budget.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03 &middot; Proposal</div>
+        <h4>Get a tailored proposal</h4>
+        <p>Tell us the format and headcount and we'll come back with a
+        full proposal — production specs, layouts and pricing.</p>
+      </div>
+    </div>
+    <div style="margin-top: 56px;">
+      <a class="btn" href="assets/cocoon-flex-spaces-assets.zip" download>Download all assets</a>
+      <span class="btn-sub">One zip — every image, floorplan and the venue film, ready for your planning deck.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="inner">
+    <div class="sig">
+      <p>
+        We'd love to show you this one in person — the photographs
+        undersell the stair.
+      </p>
+      <div class="name">Eduard Monteagudo Martín</div>
+      <div class="role">Cocoon Flex Spaces &middot; Sales</div>
+      <p style="margin-top: 14px; font-size: 14px;">
+        <a href="mailto:eduard@cocoonflexspaces.com">eduard@cocoonflexspaces.com</a><br/>
+        Sales Team &middot; <a href="mailto:info@cocoonflexspaces.com">info@cocoonflexspaces.com</a>
+      </p>
+    </div>
+    <div class="meta">
+      <strong>Landmark off Fifth</strong><br/>
+      Upper East Side, Manhattan<br/>
+      Discovery Portfolio &middot; June 2026<br/>
+      Managed by Cocoon Flex Spaces<br/>
+      <a href="https://cocoonflexspaces.com">cocoonflexspaces.com</a><br/>
+      917-398-3938
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     LIGHTBOX
+     ============================================================ -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Expanded media">
+  <span class="lb-close">✕ Close</span>
+  <div id="lb-content"></div>
+</div>
+
+<script>
+(function () {
+  var lb = document.getElementById('lightbox');
+  var content = document.getElementById('lb-content');
+  var VIDEO_SRC = 'https://www.canva.com/design/DAHLiMoHQRE/Gk5GPBXM3GjqSo6wRgzO7g/watch?embed';
+
+  function openLightbox(node) {
+    content.innerHTML = '';
+    content.appendChild(node);
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lb.classList.remove('open');
+    content.innerHTML = '';
+    document.body.style.overflow = '';
+  }
+
+  lb.addEventListener('click', function (e) {
+    if (e.target.closest('.lb-video')) return;
+    closeLightbox();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  document.querySelectorAll('.mosaic-grid .frame img, .plan-frame img, .cover-image img')
+    .forEach(function (img) {
+      img.addEventListener('click', function () {
+        var fig = document.createElement('figure');
+        fig.className = 'lb-figure';
+        var big = document.createElement('img');
+        big.src = img.src;
+        big.alt = img.alt || '';
+        fig.appendChild(big);
+        if (img.alt) {
+          var cap = document.createElement('figcaption');
+          cap.className = 'lb-caption';
+          cap.textContent = img.alt;
+          fig.appendChild(cap);
+        }
+        openLightbox(fig);
+      });
+    });
+
+  var vbtn = document.getElementById('video-expand');
+  if (vbtn) {
+    vbtn.addEventListener('click', function () {
+      var frame = document.createElement('div');
+      frame.className = 'lb-frame';
+      var wrap = document.createElement('div');
+      wrap.className = 'lb-video';
+      var ifr = document.createElement('iframe');
+      ifr.src = VIDEO_SRC;
+      ifr.setAttribute('allowfullscreen', 'allowfullscreen');
+      ifr.setAttribute('allow', 'fullscreen');
+      ifr.title = 'Venue film by Cocoon Flex Spaces';
+      wrap.appendChild(ifr);
+      frame.appendChild(wrap);
+      openLightbox(frame);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
